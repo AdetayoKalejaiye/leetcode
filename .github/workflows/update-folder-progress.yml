@@ -15,47 +15,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Count folders and update SVG
+      - name: Count folders and update README
         run: |
-          # Count top-level folders (adjust path/depth as needed)
           CURRENT=$(find . -mindepth 1 -maxdepth 1 -type d \
             ! -name '.git' \
             ! -name '.github' \
             | wc -l | tr -d ' ')
 
-          TOTAL=500
-          BAR_MAX=380
-          BAR_X=80
-
-          # Calculate fill width
-          FILL=$(python3 -c "print(int(($CURRENT/$TOTAL)*$BAR_MAX))")
-
-          echo "Folders: $CURRENT / $TOTAL  →  fill width: $FILL"
-
-          # Rewrite the SVG
-          cat > folder-progress.svg <<EOF
-          <svg xmlns="http://www.w3.org/2000/svg" width="500" height="35">
-            <!-- Background -->
-            <rect width="500" height="35" rx="6" fill="#333333"/>
-
-            <!-- Label -->
-            <text x="12" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="12" fill="#ffffff" font-weight="bold">Folders</text>
-
-            <!-- Progress track -->
-            <rect x="${BAR_X}" y="9" width="${BAR_MAX}" height="17" rx="4" fill="#555555"/>
-
-            <!-- Progress fill -->
-            <rect x="${BAR_X}" y="9" width="${FILL}" height="17" rx="4" fill="#00c853"/>
-
-            <!-- Count -->
-            <text x="488" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11" fill="#cccccc" text-anchor="end">${CURRENT} / ${TOTAL}</text>
-          </svg>
-          EOF
+          # Update the number in the README progress bar URL
+          sed -i "s|progressbar.maheshwari.dev/[0-9]*/500|progressbar.maheshwari.dev/${CURRENT}/500|g" README.md
 
       - name: Commit and push if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add folder-progress.svg
-          git diff --cached --quiet || git commit -m "chore: update folder progress bar [skip ci]"
+          git add README.md
+          git diff --cached --quiet || git commit -m "chore: update folder progress [skip ci]"
           git push
