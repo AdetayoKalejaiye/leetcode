@@ -1,41 +1,61 @@
-name: Update folder progress
+name: Update Folder Progress
 
 on:
   push:
+    branches: [ main, master ]
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   update-progress:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Count folders
-        id: folders
+      - name: Count folders and update SVG
         run: |
-          count=$(find . -maxdepth 1 -type d ! -name '.' ! -name '.git' ! -name '.github' | wc -l | tr -d ' ')
-          echo "count=$count" >> "$GITHUB_OUTPUT"
+          # Count top-level folders (adjust path/depth as needed)
+          CURRENT=$(find . -mindepth 1 -maxdepth 1 -type d \
+            ! -name '.git' \
+            ! -name '.github' \
+            | wc -l | tr -d ' ')
 
-      - name: Update README
-        run: |
-          count="${{ steps.folders.outputs.count }}"
-          cat > README.MD <<EOF
-          [![Folder Progress](https://progress-bar.dev/${count}/?scale=500&title=Folders&width=500&color=00c853&suffix=/500)](https://github.com/${{ github.repository }}/actions/workflows/update-folder-progress.yml)
+          TOTAL=500
+          BAR_MAX=380
+          BAR_X=80
+
+          # Calculate fill width
+          FILL=$(python3 -c "print(int(($CURRENT/$TOTAL)*$BAR_MAX))")
+
+          echo "Folders: $CURRENT / $TOTAL  →  fill width: $FILL"
+
+          # Rewrite the SVG
+          cat > folder-progress.svg <<EOF
+          <svg xmlns="http://www.w3.org/2000/svg" width="500" height="35">
+            <!-- Background -->
+            <rect width="500" height="35" rx="6" fill="#333333"/>
+
+            <!-- Label -->
+            <text x="12" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="12" fill="#ffffff" font-weight="bold">Folders</text>
+
+            <!-- Progress track -->
+            <rect x="${BAR_X}" y="9" width="${BAR_MAX}" height="17" rx="4" fill="#555555"/>
+
+            <!-- Progress fill -->
+            <rect x="${BAR_X}" y="9" width="${FILL}" height="17" rx="4" fill="#00c853"/>
+
+            <!-- Count -->
+            <text x="488" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11" fill="#cccccc" text-anchor="end">${CURRENT} / ${TOTAL}</text>
+          </svg>
           EOF
 
-      - name: Commit changes
+      - name: Commit and push if changed
         run: |
-          if git diff --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
+          git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.MD
-          git commit -m "Update folder progress"
+          git add folder-progress.svg
+          git diff --cached --quiet || git commit -m "chore: update folder progress bar [skip ci]"
           git push
