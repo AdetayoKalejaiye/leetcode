@@ -1,0 +1,41 @@
+name: Update folder progress
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-progress:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Count folders
+        id: folders
+        run: |
+          count=$(find . -maxdepth 1 -type d ! -name '.' ! -name '.git' ! -name '.github' | wc -l | tr -d ' ')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      - name: Update README
+        run: |
+          count="${{ steps.folders.outputs.count }}"
+          cat > README.MD <<EOF
+          [![Folder Progress](https://progress-bar.dev/${count}/?scale=500&title=Folders&width=500&color=00c853&suffix=/500)](https://github.com/${{ github.repository }}/actions/workflows/update-folder-progress.yml)
+          EOF
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.MD
+          git commit -m "Update folder progress"
+          git push
