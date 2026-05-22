@@ -15,24 +15,35 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Count folders and update README
+      - name: Generate progress SVG
         run: |
           CURRENT=$(find . -mindepth 1 -maxdepth 1 -type d \
-            ! -name '.git' \
-            ! -name '.github' \
-            | wc -l | tr -d ' ')
+            ! -name '.git' ! -name '.github' | wc -l | tr -d ' ')
+          TOTAL=500
 
-          echo "Folders found: $CURRENT"
+          python3 - <<PYEOF
+          current = $CURRENT
+          total = $TOTAL
+          bar_max = 380
+          fill = int((current / total) * bar_max)
+          pct = f"{current} / {total}"
 
-          README_FILE=$(find . -maxdepth 1 -iname "readme.md" | head -1)
-          echo "README found at: $README_FILE"
+          svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="500" height="35">
+            <rect width="500" height="35" rx="6" fill="#333333"/>
+            <text x="12" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="12" fill="#ffffff" font-weight="bold">Folders</text>
+            <rect x="80" y="9" width="380" height="17" rx="4" fill="#555555"/>
+            <rect x="80" y="9" width="{fill}" height="17" rx="4" fill="#00c853"/>
+            <text x="488" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11" fill="#cccccc" text-anchor="end">{pct}</text>
+          </svg>"""
 
-          sed -i "s|progressbar.maheshwari.dev/[0-9]*/500|progressbar.maheshwari.dev/${CURRENT}/500|g" "$README_FILE"
+          with open("folder-progress.svg", "w") as f:
+              f.write(svg)
+          PYEOF
 
       - name: Commit and push if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
+          git add folder-progress.svg
           git diff --cached --quiet || git commit -m "chore: update folder progress [skip ci]"
           git push
