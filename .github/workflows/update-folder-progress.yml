@@ -1,0 +1,49 @@
+name: Update Folder Progress
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  update-progress:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate progress SVG
+        run: |
+          CURRENT=$(find . -mindepth 1 -maxdepth 1 -type d \
+            ! -name '.git' ! -name '.github' | wc -l | tr -d ' ')
+          TOTAL=500
+
+          python3 - <<PYEOF
+          current = $CURRENT
+          total = $TOTAL
+          bar_max = 380
+          fill = int((current / total) * bar_max)
+          pct = f"{current} / {total}"
+
+          svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="500" height="35">
+            <rect width="500" height="35" rx="6" fill="#333333"/>
+            <text x="12" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="12" fill="#ffffff" font-weight="bold">Folders</text>
+            <rect x="80" y="9" width="380" height="17" rx="4" fill="#555555"/>
+            <rect x="80" y="9" width="{fill}" height="17" rx="4" fill="#00c853"/>
+            <text x="488" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11" fill="#cccccc" text-anchor="end">{pct}</text>
+          </svg>"""
+
+          with open("folder-progress.svg", "w") as f:
+              f.write(svg)
+          PYEOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add folder-progress.svg
+          git diff --cached --quiet || git commit -m "chore: update folder progress [skip ci]"
+          git push
