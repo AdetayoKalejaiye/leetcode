@@ -40,10 +40,13 @@ jobs:
               f.write(svg)
           PYEOF
 
+      - name: Update README topics
+        run: python3 .github/scripts/update_readme_topics.py
+
       - name: Commit and push if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add folder-progress.svg
+          git add folder-progress.svg README.MD
           git diff --cached --quiet || git commit -m "chore: update folder progress [skip ci]"
           git push
