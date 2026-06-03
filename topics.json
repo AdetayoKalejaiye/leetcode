@@ -1,0 +1,77 @@
+{
+  "topics": [
+    {
+      "name": "Arrays & Two Pointers",
+      "folders": [
+        "3sum",
+        "container-most-water",
+        "mergesortedarray",
+        "setzeroes"
+      ]
+    },
+    {
+      "name": "Math & Bit Manipulation",
+      "folders": [
+        "countbits",
+        "missingnumber"
+      ]
+    },
+    {
+      "name": "Graphs",
+      "folders": [
+        "can-visit-all-rooms",
+        "clonegraph",
+        "numIslands"
+      ]
+    },
+    {
+      "name": "Trees",
+      "folders": [
+        "levelorder"
+      ]
+    },
+    {
+      "name": "Dynamic Programming",
+      "folders": [
+        "longestcommonsubsequence",
+        "wordbreak"
+      ]
+    },
+    {
+      "name": "Heaps & Hashing",
+      "folders": [
+        "containsdupli.py",
+        "medianstream",
+        "topkfreqelements"
+      ]
+    },
+    {
+      "name": "Linked Lists",
+      "folders": [
+        "linkedlistcycle.py",
+        "removenthnodefromendoflist",
+        "reorderlist",
+        "sumtwonumbers"
+      ]
+    },
+    {
+      "name": "Strings",
+      "folders": [
+        "validanagram",
+        "zigzagconversion"
+      ]
+    },
+    {
+      "name": "Stacks",
+      "folders": [
+        "validparentheses"
+      ]
+    },
+    {
+      "name": "Greedy",
+      "folders": [
+        "asteroidsdestroyed"
+      ]
+    }
+  ]
+}
