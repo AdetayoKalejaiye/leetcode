@@ -33,12 +33,17 @@ def list_solution_folders() -> list[str]:
 def build_section(topics: list[dict[str, object]], folders: list[str]) -> str:
     lines: list[str] = []
     used: set[str] = set()
+    missing: set[str] = set()
 
     for topic in topics:
         name = topic.get("name")
         entries = topic.get("folders")
         if not isinstance(name, str) or not isinstance(entries, list):
             raise ValueError("Each topic must include 'name' and 'folders'")
+
+        for folder in entries:
+            if folder not in folders:
+                missing.add(folder)
 
         topic_folders = [folder for folder in entries if folder in folders]
         if not topic_folders:
@@ -49,6 +54,10 @@ def build_section(topics: list[dict[str, object]], folders: list[str]) -> str:
             lines.append(f"- [{folder}](./{folder})")
         lines.append("")
         used.update(topic_folders)
+
+    if missing:
+        missing_list = ", ".join(sorted(missing))
+        raise ValueError(f"topics.json references missing folders: {missing_list}")
 
     remaining = [folder for folder in folders if folder not in used]
     if remaining:
