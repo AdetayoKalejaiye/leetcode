@@ -62,12 +62,15 @@ def build_section(topics: list[dict[str, object]], folders: list[str]) -> str:
 
 def update_readme(section: str) -> None:
     content = README_PATH.read_text(encoding="utf-8")
+    has_topics_heading = any(
+        line.strip() == "## Topics" for line in content.splitlines()
+    )
     if SECTION_START in content and SECTION_END in content:
         before, remainder = content.split(SECTION_START, 1)
         _, after = remainder.split(SECTION_END, 1)
         updated = f"{before}{SECTION_START}\n{section}{SECTION_END}{after}"
     else:
-        header = "## Topics\n\n" if "## Topics" not in content else ""
+        header = "## Topics\n\n" if not has_topics_heading else ""
         updated = (
             content.rstrip()
             + "\n\n"
