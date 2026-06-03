@@ -28,10 +28,12 @@ This section is auto-generated from `topics.json`.
 - [wordbreak](./wordbreak)
 
 ### Heaps & Hashing
+- [containsdupli.py](./containsdupli.py)
 - [medianstream](./medianstream)
 - [topkfreqelements](./topkfreqelements)
 
 ### Linked Lists
+- [linkedlistcycle.py](./linkedlistcycle.py)
 - [removenthnodefromendoflist](./removenthnodefromendoflist)
 - [reorderlist](./reorderlist)
 - [sumtwonumbers](./sumtwonumbers)
@@ -45,8 +47,4 @@ This section is auto-generated from `topics.json`.
 
 ### Greedy
 - [asteroidsdestroyed](./asteroidsdestroyed)
-
-### Uncategorized
-- [containsdupli.py](./containsdupli.py)
-- [linkedlistcycle.py](./linkedlistcycle.py)
 <!-- TOPICS:END -->

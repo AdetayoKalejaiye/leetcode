@@ -67,9 +67,11 @@ def update_readme(section: str) -> None:
         _, after = remainder.split(SECTION_END, 1)
         updated = f"{before}{SECTION_START}\n{section}{SECTION_END}{after}"
     else:
+        header = "## Topics\n\n" if "## Topics" not in content else ""
         updated = (
             content.rstrip()
-            + "\n\n## Topics\n\n"
+            + "\n\n"
+            + header
             + SECTION_START
             + "\n"
             + section
