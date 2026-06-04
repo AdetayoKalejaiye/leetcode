@@ -47,4 +47,7 @@ This section is auto-generated from `topics.json`.
 
 ### Greedy
 - [asteroidsdestroyed](./asteroidsdestroyed)
+
+### Uncategorized
+- [totalwaviness](./totalwaviness)
 <!-- TOPICS:END -->
