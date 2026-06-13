@@ -49,5 +49,6 @@ This section is auto-generated from `topics.json`.
 - [asteroidsdestroyed](./asteroidsdestroyed)
 
 ### Uncategorized
+- [countthenumberofspecialcharactersII.py](./countthenumberofspecialcharactersII.py)
 - [totalwaviness](./totalwaviness)
 <!-- TOPICS:END -->
