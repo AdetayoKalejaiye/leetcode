@@ -50,5 +50,7 @@ This section is auto-generated from `topics.json`.
 
 ### Uncategorized
 - [countthenumberofspecialcharactersII.py](./countthenumberofspecialcharactersII.py)
+- [movepiecestoobtainstring](./movepiecestoobtainstring)
 - [totalwaviness](./totalwaviness)
+- [weightedwordmap](./weightedwordmap)
 <!-- TOPICS:END -->
