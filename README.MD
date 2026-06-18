@@ -49,6 +49,7 @@ This section is auto-generated from `topics.json`.
 - [asteroidsdestroyed](./asteroidsdestroyed)
 
 ### Uncategorized
+- [angleofclock](./angleofclock)
 - [countthenumberofspecialcharactersII.py](./countthenumberofspecialcharactersII.py)
 - [movepiecestoobtainstring](./movepiecestoobtainstring)
 - [totalwaviness](./totalwaviness)
