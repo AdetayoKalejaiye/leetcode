@@ -57,6 +57,7 @@ This section is auto-generated from `topics.json`.
 - [movepiecestoobtainstring](./movepiecestoobtainstring)
 - [process-string-II](./process-string-II)
 - [process-string1](./process-string1)
+- [reversebits](./reversebits)
 - [totalwaviness](./totalwaviness)
 - [weightedwordmap](./weightedwordmap)
 <!-- TOPICS:END -->
