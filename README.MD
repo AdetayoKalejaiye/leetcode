@@ -51,6 +51,7 @@ This section is auto-generated from `topics.json`.
 ### Uncategorized
 - [angleofclock](./angleofclock)
 - [countthenumberofspecialcharactersII.py](./countthenumberofspecialcharactersII.py)
+- [findlargestaltitude](./findlargestaltitude)
 - [movepiecestoobtainstring](./movepiecestoobtainstring)
 - [process-string-II](./process-string-II)
 - [process-string1](./process-string1)
