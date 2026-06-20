@@ -53,6 +53,7 @@ This section is auto-generated from `topics.json`.
 - [countthenumberofspecialcharactersII.py](./countthenumberofspecialcharactersII.py)
 - [deletemiddleoflinkedlist.py](./deletemiddleoflinkedlist.py)
 - [findlargestaltitude](./findlargestaltitude)
+- [maxtwinsumlinkedlist](./maxtwinsumlinkedlist)
 - [movepiecestoobtainstring](./movepiecestoobtainstring)
 - [process-string-II](./process-string-II)
 - [process-string1](./process-string1)
