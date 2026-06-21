@@ -21,6 +21,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -53,12 +54,22 @@ CODE_SUFFIXES = (".py", ".js", ".ts", ".java", ".cpp", ".c", ".go", ".rb", ".kt"
 
 
 def discover_items():
-    """Top-level folder/file names in the repo that represent solutions."""
+    """Top-level folder/file names in the repo that represent solutions.
+
+    Whitelist-based on purpose: a solution is either a directory, or a file
+    with a recognized code extension. This automatically skips stray files
+    like badges/SVGs, alt-case READMEs, lockfiles, configs, etc. without
+    needing to hardcode every possible junk filename.
+    """
     items = []
     for entry in REPO_ROOT.iterdir():
-        if entry.name in IGNORE or entry.name.startswith("."):
+        name = entry.name
+        if name in IGNORE or name.startswith("."):
             continue
-        items.append(entry.name)
+        if entry.is_dir():
+            items.append(name)
+        elif entry.is_file() and entry.suffix in CODE_SUFFIXES:
+            items.append(name)
     return sorted(items)
 
 
@@ -123,7 +134,17 @@ fences), in exactly this shape:
 
 
 def call_groq(prompt):
-    api_key = os.environ["GROQ_API_KEY"]
+    api_key = os.environ.get("GROQ_API_KEY", "")
+    if not api_key:
+        print(
+            "GROQ_API_KEY is empty. Check Settings -> Secrets and variables -> "
+            "Actions on the repo, and confirm the secret name is exactly "
+            "GROQ_API_KEY (case-sensitive) and the value has no extra quotes "
+            "or whitespace.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     body = json.dumps({
         "model": MODEL,
         "temperature": 0,
@@ -139,8 +160,15 @@ def call_groq(prompt):
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        data = json.loads(resp.read().decode())
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        # Print Groq's actual error message instead of a bare traceback, e.g.
+        # "Invalid API Key" vs "model_decommissioned" need very different fixes.
+        detail = e.read().decode(errors="ignore")
+        print(f"Groq API returned HTTP {e.code}:\n{detail}", file=sys.stderr)
+        raise
 
     text = data["choices"][0]["message"]["content"].strip()
     text = re.sub(r"^```(json)?\s*|\s*```$", "", text)
