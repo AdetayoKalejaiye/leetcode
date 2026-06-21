@@ -6,14 +6,18 @@
         "3sum",
         "container-most-water",
         "mergesortedarray",
-        "setzeroes"
+        "setzeroes",
+        "findlargestaltitude",
+        "totalwaviness"
       ]
     },
     {
       "name": "Math & Bit Manipulation",
       "folders": [
         "countbits",
-        "missingnumber"
+        "missingnumber",
+        "angleofclock",
+        "reversebits"
       ]
     },
     {
@@ -51,14 +55,21 @@
         "linkedlistcycle.py",
         "removenthnodefromendoflist",
         "reorderlist",
-        "sumtwonumbers"
+        "sumtwonumbers",
+        "deletemiddleoflinkedlist.py",
+        "maxtwinsumlinkedlist"
       ]
     },
     {
       "name": "Strings",
       "folders": [
         "validanagram",
-        "zigzagconversion"
+        "zigzagconversion",
+        "countthenumberofspecialcharactersII.py",
+        "movepiecestoobtainstring",
+        "process-string-II",
+        "process-string1",
+        "weightedwordmap"
       ]
     },
     {
