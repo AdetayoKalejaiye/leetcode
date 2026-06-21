@@ -157,6 +157,13 @@ def call_groq(prompt):
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            # Cloudflare (which fronts api.groq.com) blocks requests with the
+            # default Python urllib User-Agent as a bot signature (error
+            # code 1010). A normal browser-style UA avoids that.
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+            ),
         },
         method="POST",
     )
