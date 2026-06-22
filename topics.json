@@ -8,7 +8,8 @@
         "mergesortedarray",
         "setzeroes",
         "findlargestaltitude",
-        "totalwaviness"
+        "totalwaviness",
+        "mergeintervals"
       ]
     },
     {
@@ -69,7 +70,8 @@
         "movepiecestoobtainstring",
         "process-string-II",
         "process-string1",
-        "weightedwordmap"
+        "weightedwordmap",
+        "maxnumberofballoons"
       ]
     },
     {
