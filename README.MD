@@ -46,6 +46,7 @@
 * [maxtwinsumlinkedlist](https://github.com/AdetayoKalejaiye/leetcode/blob/main/maxtwinsumlinkedlist)
 * [removenthnodefromendoflist](https://github.com/AdetayoKalejaiye/leetcode/blob/main/removenthnodefromendoflist)
 * [reorderlist](https://github.com/AdetayoKalejaiye/leetcode/blob/main/reorderlist)
+* [reverselinkedlist](https://github.com/AdetayoKalejaiye/leetcode/blob/main/reverselinkedlist)
 * [sumtwonumbers](https://github.com/AdetayoKalejaiye/leetcode/blob/main/sumtwonumbers)
 
 ### Strings

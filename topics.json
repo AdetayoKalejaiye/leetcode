@@ -58,7 +58,8 @@
         "reorderlist",
         "sumtwonumbers",
         "deletemiddleoflinkedlist.py",
-        "maxtwinsumlinkedlist"
+        "maxtwinsumlinkedlist",
+        "reverselinkedlist"
       ]
     },
     {
