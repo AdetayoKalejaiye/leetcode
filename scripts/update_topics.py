@@ -27,7 +27,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TOPICS_JSON = REPO_ROOT / "topics.json"
-README = REPO_ROOT / "README.md"
+README_FILENAME = os.environ.get("README_FILENAME", "README.MD")
+README = REPO_ROOT / README_FILENAME
 
 GITHUB_USER = os.environ.get("GITHUB_REPOSITORY_OWNER", "AdetayoKalejaiye")
 REPO_NAME = os.environ.get("GITHUB_REPO_NAME", "leetcode")
@@ -43,7 +44,7 @@ MODEL = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
 # Top-level entries that are not solutions and should never be classified.
 IGNORE = {
     ".git", ".github", ".gitignore", ".gitattributes",
-    "README.md", "topics.json", "scripts",
+    "README.md", "README.MD", README_FILENAME, "topics.json", "scripts",
     "LICENSE", "LICENSE.md", ".vscode", "node_modules",
 }
 
@@ -222,25 +223,34 @@ def render_topics_block(data, all_items):
 
 
 def update_readme(new_block):
-    content = README.read_text() if README.exists() else "# README\n"
-
-    if MARKER_START in content and MARKER_END in content:
-        pattern = re.compile(re.escape(MARKER_START) + r".*?" + re.escape(MARKER_END), re.DOTALL)
-        content = pattern.sub(f"{MARKER_START}\n{new_block}{MARKER_END}", content)
-    else:
-        section = (
-            "## Topics\n"
-            "This section is auto-generated from `topics.json`. Do not edit by hand.\n\n"
-            f"{MARKER_START}\n{new_block}{MARKER_END}\n"
+    if not README.exists():
+        print(
+            f"{README_FILENAME} does not exist at the repo root. Create it "
+            f"and add:\n{MARKER_START}\n{MARKER_END}\n"
+            "where you want the topics list to appear, then re-run.",
+            file=sys.stderr,
         )
-        heading = re.search(r"^##\s+Topics\b.*$", content, re.MULTILINE)
-        if heading:
-            rest = content[heading.end():]
-            next_heading = re.search(r"\n##\s+\S", rest)
-            end = heading.end() + (next_heading.start() if next_heading else len(rest))
-            content = content[: heading.start()] + section + content[end:]
-        else:
-            content = content.rstrip() + "\n\n" + section
+        sys.exit(1)
+
+    content = README.read_text()
+
+    if MARKER_START not in content or MARKER_END not in content:
+        # Deliberately do NOT fall back to guessing a "## Topics" heading
+        # and replacing everything after it -- that's exactly what risks
+        # wiping out unrelated content (badges, progress bars, etc.) that
+        # happens to live below or around the topics section. Markers are
+        # the only safe, explicit boundary.
+        print(
+            f"Could not find {MARKER_START} / {MARKER_END} in {README_FILENAME}. "
+            "Add both lines (on their own lines, in that order) at the exact "
+            "spot in the file where the auto-generated topics list should "
+            "appear -- everything outside those two lines is left untouched.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    pattern = re.compile(re.escape(MARKER_START) + r".*?" + re.escape(MARKER_END), re.DOTALL)
+    content = pattern.sub(f"{MARKER_START}\n{new_block}{MARKER_END}", content)
 
     README.write_text(content)
 
