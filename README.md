@@ -1,7 +1,4 @@
-# README
-
-## Topics
-This section is auto-generated from `topics.json`. Do not edit by hand.
+![Folder Progress](https://raw.githubusercontent.com/AdetayoKalejaiye/leetcode/main/folder-progress.svg)
 
 <!-- TOPICS:START -->
 ### Arrays & Two Pointers
@@ -9,6 +6,7 @@ This section is auto-generated from `topics.json`. Do not edit by hand.
 * [3sum](https://github.com/AdetayoKalejaiye/leetcode/blob/main/3sum)
 * [container-most-water](https://github.com/AdetayoKalejaiye/leetcode/blob/main/container-most-water)
 * [findlargestaltitude](https://github.com/AdetayoKalejaiye/leetcode/blob/main/findlargestaltitude)
+* [mergeintervals](https://github.com/AdetayoKalejaiye/leetcode/blob/main/mergeintervals)
 * [mergesortedarray](https://github.com/AdetayoKalejaiye/leetcode/blob/main/mergesortedarray)
 * [setzeroes](https://github.com/AdetayoKalejaiye/leetcode/blob/main/setzeroes)
 * [totalwaviness](https://github.com/AdetayoKalejaiye/leetcode/blob/main/totalwaviness)
@@ -53,6 +51,7 @@ This section is auto-generated from `topics.json`. Do not edit by hand.
 ### Strings
 
 * [countthenumberofspecialcharactersII.py](https://github.com/AdetayoKalejaiye/leetcode/blob/main/countthenumberofspecialcharactersII.py)
+* [maxnumberofballoons](https://github.com/AdetayoKalejaiye/leetcode/blob/main/maxnumberofballoons)
 * [movepiecestoobtainstring](https://github.com/AdetayoKalejaiye/leetcode/blob/main/movepiecestoobtainstring)
 * [process-string-II](https://github.com/AdetayoKalejaiye/leetcode/blob/main/process-string-II)
 * [process-string1](https://github.com/AdetayoKalejaiye/leetcode/blob/main/process-string1)
