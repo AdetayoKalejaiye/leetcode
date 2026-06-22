@@ -42,7 +42,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add topics.json README.md
+          git add topics.json README.MD
           if ! git diff --cached --quiet; then
             git commit -m "chore: auto-classify new solutions and update README [skip-readme-bot]"
             git push
