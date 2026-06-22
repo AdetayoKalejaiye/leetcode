@@ -1,5 +1,6 @@
 ![Folder Progress](https://raw.githubusercontent.com/AdetayoKalejaiye/leetcode/main/folder-progress.svg)
 
+<!-- TOPICS:START -->
 ## Topics
 
 This section is auto-generated from `topics.json`.
