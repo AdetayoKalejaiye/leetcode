@@ -1,64 +1,67 @@
 ![Folder Progress](https://raw.githubusercontent.com/AdetayoKalejaiye/leetcode/main/folder-progress.svg)
 
 <!-- TOPICS:START -->
-## Topics
-
-This section is auto-generated from `topics.json`.
-
-<!-- TOPICS:START -->
 ### Arrays & Two Pointers
-- [3sum](./3sum)
-- [container-most-water](./container-most-water)
-- [mergesortedarray](./mergesortedarray)
-- [setzeroes](./setzeroes)
+
+* [3sum](https://github.com/AdetayoKalejaiye/leetcode/blob/main/3sum)
+* [container-most-water](https://github.com/AdetayoKalejaiye/leetcode/blob/main/container-most-water)
+* [findlargestaltitude](https://github.com/AdetayoKalejaiye/leetcode/blob/main/findlargestaltitude)
+* [mergesortedarray](https://github.com/AdetayoKalejaiye/leetcode/blob/main/mergesortedarray)
+* [setzeroes](https://github.com/AdetayoKalejaiye/leetcode/blob/main/setzeroes)
+* [totalwaviness](https://github.com/AdetayoKalejaiye/leetcode/blob/main/totalwaviness)
 
 ### Math & Bit Manipulation
-- [countbits](./countbits)
-- [missingnumber](./missingnumber)
+
+* [angleofclock](https://github.com/AdetayoKalejaiye/leetcode/blob/main/angleofclock)
+* [countbits](https://github.com/AdetayoKalejaiye/leetcode/blob/main/countbits)
+* [missingnumber](https://github.com/AdetayoKalejaiye/leetcode/blob/main/missingnumber)
+* [reversebits](https://github.com/AdetayoKalejaiye/leetcode/blob/main/reversebits)
 
 ### Graphs
-- [can-visit-all-rooms](./can-visit-all-rooms)
-- [clonegraph](./clonegraph)
-- [numIslands](./numIslands)
+
+* [can-visit-all-rooms](https://github.com/AdetayoKalejaiye/leetcode/blob/main/can-visit-all-rooms)
+* [clonegraph](https://github.com/AdetayoKalejaiye/leetcode/blob/main/clonegraph)
+* [numIslands](https://github.com/AdetayoKalejaiye/leetcode/blob/main/numIslands)
 
 ### Trees
-- [levelorder](./levelorder)
+
+* [levelorder](https://github.com/AdetayoKalejaiye/leetcode/blob/main/levelorder)
 
 ### Dynamic Programming
-- [longestcommonsubsequence](./longestcommonsubsequence)
-- [wordbreak](./wordbreak)
+
+* [longestcommonsubsequence](https://github.com/AdetayoKalejaiye/leetcode/blob/main/longestcommonsubsequence)
+* [wordbreak](https://github.com/AdetayoKalejaiye/leetcode/blob/main/wordbreak)
 
 ### Heaps & Hashing
-- [containsdupli.py](./containsdupli.py)
-- [medianstream](./medianstream)
-- [topkfreqelements](./topkfreqelements)
+
+* [containsdupli.py](https://github.com/AdetayoKalejaiye/leetcode/blob/main/containsdupli.py)
+* [medianstream](https://github.com/AdetayoKalejaiye/leetcode/blob/main/medianstream)
+* [topkfreqelements](https://github.com/AdetayoKalejaiye/leetcode/blob/main/topkfreqelements)
 
 ### Linked Lists
-- [linkedlistcycle.py](./linkedlistcycle.py)
-- [removenthnodefromendoflist](./removenthnodefromendoflist)
-- [reorderlist](./reorderlist)
-- [sumtwonumbers](./sumtwonumbers)
+
+* [deletemiddleoflinkedlist.py](https://github.com/AdetayoKalejaiye/leetcode/blob/main/deletemiddleoflinkedlist.py)
+* [linkedlistcycle.py](https://github.com/AdetayoKalejaiye/leetcode/blob/main/linkedlistcycle.py)
+* [maxtwinsumlinkedlist](https://github.com/AdetayoKalejaiye/leetcode/blob/main/maxtwinsumlinkedlist)
+* [removenthnodefromendoflist](https://github.com/AdetayoKalejaiye/leetcode/blob/main/removenthnodefromendoflist)
+* [reorderlist](https://github.com/AdetayoKalejaiye/leetcode/blob/main/reorderlist)
+* [sumtwonumbers](https://github.com/AdetayoKalejaiye/leetcode/blob/main/sumtwonumbers)
 
 ### Strings
-- [validanagram](./validanagram)
-- [zigzagconversion](./zigzagconversion)
+
+* [countthenumberofspecialcharactersII.py](https://github.com/AdetayoKalejaiye/leetcode/blob/main/countthenumberofspecialcharactersII.py)
+* [movepiecestoobtainstring](https://github.com/AdetayoKalejaiye/leetcode/blob/main/movepiecestoobtainstring)
+* [process-string-II](https://github.com/AdetayoKalejaiye/leetcode/blob/main/process-string-II)
+* [process-string1](https://github.com/AdetayoKalejaiye/leetcode/blob/main/process-string1)
+* [validanagram](https://github.com/AdetayoKalejaiye/leetcode/blob/main/validanagram)
+* [weightedwordmap](https://github.com/AdetayoKalejaiye/leetcode/blob/main/weightedwordmap)
+* [zigzagconversion](https://github.com/AdetayoKalejaiye/leetcode/blob/main/zigzagconversion)
 
 ### Stacks
-- [validparentheses](./validparentheses)
+
+* [validparentheses](https://github.com/AdetayoKalejaiye/leetcode/blob/main/validparentheses)
 
 ### Greedy
-- [asteroidsdestroyed](./asteroidsdestroyed)
 
-### Uncategorized
-- [angleofclock](./angleofclock)
-- [countthenumberofspecialcharactersII.py](./countthenumberofspecialcharactersII.py)
-- [deletemiddleoflinkedlist.py](./deletemiddleoflinkedlist.py)
-- [findlargestaltitude](./findlargestaltitude)
-- [maxtwinsumlinkedlist](./maxtwinsumlinkedlist)
-- [movepiecestoobtainstring](./movepiecestoobtainstring)
-- [process-string-II](./process-string-II)
-- [process-string1](./process-string1)
-- [reversebits](./reversebits)
-- [totalwaviness](./totalwaviness)
-- [weightedwordmap](./weightedwordmap)
+* [asteroidsdestroyed](https://github.com/AdetayoKalejaiye/leetcode/blob/main/asteroidsdestroyed)
 <!-- TOPICS:END -->
