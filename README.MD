@@ -67,4 +67,5 @@
 ### Greedy
 
 * [asteroidsdestroyed](https://github.com/AdetayoKalejaiye/leetcode/blob/main/asteroidsdestroyed)
+* [maxicecream](https://github.com/AdetayoKalejaiye/leetcode/blob/main/maxicecream)
 <!-- TOPICS:END -->
