@@ -40,8 +40,6 @@ jobs:
               f.write(svg)
           PYEOF
 
-      - name: Update README topics
-        run: python3 .github/scripts/update_readme_topics.py
 
       - name: Commit and push if changed
         run: |
