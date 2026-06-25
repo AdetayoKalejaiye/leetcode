@@ -1,0 +1,83 @@
+name: Update README & Folder Progress
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-bot
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    # GitHub natively skips creating a workflow run for any commit whose
+    # message contains "[skip ci]" -- this check is just a backup.
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Classify new solutions and regenerate README topics
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPO_NAME: ${{ github.event.repository.name }}
+          GITHUB_DEFAULT_BRANCH: ${{ github.ref_name }}
+          GROQ_MODEL: llama-3.1-8b-instant
+        run: python scripts/update_topics.py
+
+      - name: Generate folder progress SVG
+        run: |
+          CURRENT=$(find . -mindepth 1 -maxdepth 1 -type d \
+            ! -name '.git' ! -name '.github' | wc -l | tr -d ' ')
+          TOTAL=500
+          python3 - <<PYEOF
+          current = $CURRENT
+          total = $TOTAL
+          bar_max = 380
+          fill = int((current / total) * bar_max)
+          pct = f"{current} / {total}"
+          svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="500" height="35">
+            <rect width="500" height="35" rx="6" fill="#333333"/>
+            <text x="12" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="12" fill="#ffffff" font-weight="bold">Folders</text>
+            <rect x="80" y="9" width="380" height="17" rx="4" fill="#555555"/>
+            <rect x="80" y="9" width="{fill}" height="17" rx="4" fill="#00c853"/>
+            <text x="488" y="22" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11" fill="#cccccc" text-anchor="end">{pct}</text>
+          </svg>"""
+          with open("folder-progress.svg", "w") as f:
+              f.write(svg)
+          PYEOF
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add topics.json README.MD folder-progress.svg
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore: update topics, README, and folder progress [skip ci]"
+
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Pushed successfully."
+              exit 0
+            fi
+            echo "Push rejected -- rebasing onto latest $GITHUB_REF_NAME (attempt $attempt)..."
+            git pull --rebase --autostash origin "$GITHUB_REF_NAME"
+            sleep $((attempt * 3))
+          done
+          echo "Failed to push after multiple retries." >&2
+          exit 1
