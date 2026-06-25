@@ -5,6 +5,7 @@
 
 * [3sum](https://github.com/AdetayoKalejaiye/leetcode/blob/main/3sum)
 * [container-most-water](https://github.com/AdetayoKalejaiye/leetcode/blob/main/container-most-water)
+* [countmajoritysubarray](https://github.com/AdetayoKalejaiye/leetcode/blob/main/countmajoritysubarray)
 * [findlargestaltitude](https://github.com/AdetayoKalejaiye/leetcode/blob/main/findlargestaltitude)
 * [mergeintervals](https://github.com/AdetayoKalejaiye/leetcode/blob/main/mergeintervals)
 * [mergesortedarray](https://github.com/AdetayoKalejaiye/leetcode/blob/main/mergesortedarray)

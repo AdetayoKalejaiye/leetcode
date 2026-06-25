@@ -9,7 +9,8 @@
         "setzeroes",
         "findlargestaltitude",
         "totalwaviness",
-        "mergeintervals"
+        "mergeintervals",
+        "countmajoritysubarray"
       ]
     },
     {
