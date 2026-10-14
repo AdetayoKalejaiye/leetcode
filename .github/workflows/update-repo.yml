@@ -28,13 +28,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Classify new solutions and regenerate README topics
+      - name: Classify solutions and regenerate README topics
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           GITHUB_REPO_NAME: ${{ github.event.repository.name }}
           GITHUB_DEFAULT_BRANCH: ${{ github.ref_name }}
           GROQ_MODEL: llama-3.1-8b-instant
+          RECLASSIFY_ALL: "1"
         run: python scripts/update_topics.py
 
       - name: Generate folder progress SVG

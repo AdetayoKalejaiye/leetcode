@@ -12,6 +12,7 @@ GitHub Action doesn't need a `pip install` step.
 Environment variables:
     GROQ_API_KEY              required, only used if there are new items
     GROQ_MODEL                 optional, defaults to llama-3.1-8b-instant
+    RECLASSIFY_ALL             optional, when truthy reclassifies all items
     GITHUB_REPOSITORY_OWNER   optional, used to build README links
     GITHUB_REPO_NAME           optional, used to build README links
     GITHUB_DEFAULT_BRANCH      optional, defaults to "main"
@@ -196,6 +197,15 @@ def apply_classifications(data, classifications):
     return data
 
 
+def sorted_topics_data(data):
+    topics = []
+    for topic in data["topics"]:
+        folders = sorted(set(topic["folders"]), key=str.casefold)
+        topics.append({"name": topic["name"], "folders": folders})
+    topics.sort(key=lambda t: t["name"].casefold())
+    return {"topics": topics}
+
+
 def render_topics_block(data, all_items):
     classified = classified_set(data)
     uncategorized = [i for i in all_items if i not in classified]
@@ -205,7 +215,7 @@ def render_topics_block(data, all_items):
         if not t["folders"]:
             continue
         lines.append(f"### {t['name']}\n")
-        for folder in sorted(t["folders"]):
+        for folder in t["folders"]:
             lines.append(
                 f"* [{folder}](https://github.com/{GITHUB_USER}/{REPO_NAME}/blob/{BRANCH}/{folder})"
             )
@@ -258,21 +268,28 @@ def update_readme(new_block):
 def main():
     data = load_topics()
     all_items = discover_items()
+    reclassify_all = os.environ.get("RECLASSIFY_ALL", "").strip().lower() in {"1", "true", "yes", "on"}
     already = classified_set(data)
-    new_items = [i for i in all_items if i not in already]
+    items_to_classify = all_items if reclassify_all else [i for i in all_items if i not in already]
 
-    if new_items:
+    if items_to_classify:
         if "GROQ_API_KEY" not in os.environ:
-            print(f"New items found but GROQ_API_KEY is not set: {new_items}", file=sys.stderr)
+            mode = "all items" if reclassify_all else "new items"
+            print(f"Need to classify {mode} but GROQ_API_KEY is not set: {items_to_classify}", file=sys.stderr)
             sys.exit(1)
-        print(f"Classifying {len(new_items)} new item(s): {new_items}")
-        prompt = build_prompt(new_items, data["topics"])
+        mode = "all items" if reclassify_all else "new item(s)"
+        print(f"Classifying {len(items_to_classify)} {mode}: {items_to_classify}")
+        prompt = build_prompt(items_to_classify, data["topics"])
         classifications = call_groq(prompt)
+        if reclassify_all:
+            data = {"topics": [{"name": t["name"], "folders": []} for t in data["topics"]]}
         data = apply_classifications(data, classifications)
+        data = sorted_topics_data(data)
         TOPICS_JSON.write_text(json.dumps(data, indent=2) + "\n")
     else:
         print("No new items to classify.")
 
+    data = sorted_topics_data(data)
     update_readme(render_topics_block(data, all_items))
 
 
