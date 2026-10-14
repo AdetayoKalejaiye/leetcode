@@ -196,6 +196,15 @@ def apply_classifications(data, classifications):
     return data
 
 
+def sorted_topics_data(data):
+    topics = []
+    for topic in data["topics"]:
+        folders = sorted(set(topic["folders"]), key=str.casefold)
+        topics.append({"name": topic["name"], "folders": folders})
+    topics.sort(key=lambda t: t["name"].casefold())
+    return {"topics": topics}
+
+
 def render_topics_block(data, all_items):
     classified = classified_set(data)
     uncategorized = [i for i in all_items if i not in classified]
@@ -205,7 +214,7 @@ def render_topics_block(data, all_items):
         if not t["folders"]:
             continue
         lines.append(f"### {t['name']}\n")
-        for folder in sorted(t["folders"]):
+        for folder in t["folders"]:
             lines.append(
                 f"* [{folder}](https://github.com/{GITHUB_USER}/{REPO_NAME}/blob/{BRANCH}/{folder})"
             )
@@ -269,10 +278,12 @@ def main():
         prompt = build_prompt(new_items, data["topics"])
         classifications = call_groq(prompt)
         data = apply_classifications(data, classifications)
+        data = sorted_topics_data(data)
         TOPICS_JSON.write_text(json.dumps(data, indent=2) + "\n")
     else:
         print("No new items to classify.")
 
+    data = sorted_topics_data(data)
     update_readme(render_topics_block(data, all_items))
 
 
